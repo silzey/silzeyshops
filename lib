@@ -1,0 +1,11 @@
+lib/
+├── main.dart
+├── screens/
+│   ├── home_page.dart
+│   ├── result_page.dart
+│   ├── menu_screen.dart
+│   ├── user_dashboard.dart
+│   └── admin_dashboard.dart
+├── widgets/
+│   ├── bottom_nav.dart
+│   └── product_tile.dart
