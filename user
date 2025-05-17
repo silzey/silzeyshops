@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+
+class UserDashboard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final String name = "Jane Doe"; // replace with dynamic user data
+    final String email = "jane@example.com";
+
+    return Scaffold(
+      appBar: AppBar(title: Text('My Profile')),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            Text("Welcome, $name", style: TextStyle(fontSize: 24)),
+            Text("Email: $email"),
+            SizedBox(height: 20),
+            ListTile(title: Text("Scan History"), trailing: Icon(Icons.history)),
+            ListTile(title: Text("My Purchases"), trailing: Icon(Icons.shopping_bag)),
+          ],
+        ),
+      ),
+    );
+  }
+}
