@@ -1,0 +1,16 @@
+name: scan_buy_app
+description: An app to scan and buy products using AI
+version: 1.0.0
+
+environment:
+  sdk: '>=2.17.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  image_picker: ^1.0.4
+  google_fonts: ^6.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
