@@ -1,24 +1,183 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class UserDashboard extends StatelessWidget {
+void main() {
+  runApp(const ScanBuyApp());
+}
+
+class ScanBuyApp extends StatelessWidget {
+  const ScanBuyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final String name = "Jane Doe"; // replace with dynamic user data
-    final String email = "jane@example.com";
+    return MaterialApp(
+      title: 'Scan & Buy - Apple Style',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: const Color(0xFFF2F2F7),
+        primaryColor: Colors.blueAccent,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
+          titleTextStyle: GoogleFonts.inter(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+        textTheme: GoogleFonts.interTextTheme().copyWith(
+          bodyLarge: const TextStyle(color: Colors.black87, fontSize: 16),
+          titleLarge: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        ),
+        cardTheme: CardTheme(
+          color: Colors.white,
+          margin: const EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          elevation: 2,
+          shadowColor: Colors.black12,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.blueAccent,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide.none,
+          ),
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.blueAccent,
+          unselectedItemColor: Colors.grey,
+          elevation: 10,
+          type: BottomNavigationBarType.fixed,
+        ),
+      ),
+      home: const DashboardScreen(),
+    );
+  }
+}
 
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My Profile')),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      appBar: AppBar(title: const Text('My Dashboard')),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Welcome, $name", style: TextStyle(fontSize: 24)),
-            Text("Email: $email"),
-            SizedBox(height: 20),
-            ListTile(title: Text("Scan History"), trailing: Icon(Icons.history)),
-            ListTile(title: Text("My Purchases"), trailing: Icon(Icons.shopping_bag)),
+            _buildProfileCard(),
+            const SizedBox(height: 20),
+            const Text("Quick Actions", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 16,
+              runSpacing: 16,
+              children: [
+                _actionCard(Icons.camera_alt, "Scan Product"),
+                _actionCard(Icons.shopping_cart, "My Orders"),
+                _actionCard(Icons.settings, "Settings"),
+                _actionCard(Icons.logout, "Logout"),
+              ],
+            ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProfileCard() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          const CircleAvatar(
+            radius: 32,
+            backgroundImage: NetworkImage("https://via.placeholder.com/150"),
+          ),
+          const SizedBox(width: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Jane Doe",
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                "jane@example.com",
+                style: GoogleFonts.inter(
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _actionCard(IconData icon, String label) {
+    return Container(
+      width: 140,
+      height: 120,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 32, color: Colors.blueAccent),
+          const SizedBox(height: 12),
+          Text(label, style: GoogleFonts.inter(fontSize: 14)),
+        ],
       ),
     );
   }
